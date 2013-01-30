@@ -1,0 +1,10 @@
+require_relative "../lib/couch_id_grabber"
+require_relative "../lib/couch_mongo_importer"
+
+id_grabber = CouchIdGrabber.new "http://localhost:5984/content-development/_design/RecipeService%3A%3ARecipe/_view/all"
+
+cm_importer = CouchMongoImporter.new(:host => "http://localhost:5984", :database => "content-development")
+
+id_grabber.document_ids.each{|document_id|
+  cm_importer.import_record document_id
+}
